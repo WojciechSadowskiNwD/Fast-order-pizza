@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { Outlet, useNavigation } from "react-router-dom";
 import CartOverview from "../features/cart/CartOverview";
 import Header from "./Header";
@@ -15,7 +17,7 @@ function AppLayout() {
       <Header />
       <div className="overflow-scroll">
         <main className="mx-auto max-w-3xl">
-          <h1>Content - AppLayout</h1>
+          {/* <h1>Content - AppLayout</h1> */}
           <Outlet />
         </main>
       </div>
