@@ -43,3 +43,11 @@ export const {
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
+
+export const getTotalQuantity = (state) =>
+  state.cart.cart.reduce((sum, item) => sum + item.quantity, 0);
+
+export const getTotalCartPrice = (state) =>
+  state.cart.cart.reduce((sum, item) => sum + item.totalPrice, 0);
+
+// Create function handleAddToCart(add new obj in state cart[] or increase quantity) in MeniItem. Create functions getTotalQuantity, getTotalCartPrice to calculate the quantity of pizzas and the finalPrice. The component CartOverview has been expanded - add conditional return.

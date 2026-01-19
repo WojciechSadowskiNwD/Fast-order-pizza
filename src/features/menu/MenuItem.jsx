@@ -1,9 +1,30 @@
 import Button from "../../ui/Button";
 import { formatCurrency } from "../../utils/helpers";
+import { useDispatch, useSelector } from "react-redux";
+import { addItem, increateItemQuantity } from "../cart/cartSlice";
 
 function MenuItem({ pizza }) {
-  // const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
-  const { name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
+  const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
+  const dispatch = useDispatch();
+  const cart = useSelector((store) => store.cart.cart);
+
+  function handleAddToCart() {
+    const existingPizza = cart.find((item) => item.pizzaId === id);
+
+    if (existingPizza) {
+      console.log("Pizza is exist in cart, so I increment quantity +1");
+      return dispatch(increateItemQuantity(id));
+    } else if (!existingPizza) console.log("dodaję nową pizzę do zamówienia");
+
+    const newItem = {
+      pizzaId: id,
+      name,
+      quantity: 1,
+      unitPrice,
+      totalPrice: unitPrice * 1,
+    };
+    dispatch(addItem(newItem));
+  }
 
   return (
     <li className="flex gap-4 py-2">
@@ -12,7 +33,7 @@ function MenuItem({ pizza }) {
         alt={name}
         className={`h-24 ${soldOut ? "opacity-70 grayscale" : ""}`}
       />
-      <div className="flex flex-col grow pt-0.5">
+      <div className="flex grow flex-col pt-0.5">
         <p className="font-medium">{name}</p>
         <p className="text-sm text-stone-500 capitalize italic">
           {ingredients.join(", ")}
@@ -26,7 +47,11 @@ function MenuItem({ pizza }) {
             </p>
           )}
 
-          <Button type="small">Add to cart</Button>
+          {!soldOut && (
+            <Button type="small" onClick={handleAddToCart}>
+              Add to cart
+            </Button>
+          )}
         </div>
       </div>
     </li>
