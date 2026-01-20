@@ -27,6 +27,8 @@ const cartSlice = createSlice({
       const item = state.cart.find((item) => item.pizzaId === action.payload);
       item.quantity--;
       item.totalPrice = item.quantity * item.unitPrice;
+
+      if(item.quantity === 0) cartSlice.caseReducers.deleteItem(state, action);
     },
     clearCart(state) {
       state.cart = [];
@@ -37,6 +39,7 @@ const cartSlice = createSlice({
 //action creators
 export const {
   addItem,
+  deleteItem,
   increateItemQuantity,
   decreaseItemQuantity,
   clearCart,
@@ -51,3 +54,8 @@ export const getTotalQuantity = (state) =>
 
 export const getTotalCartPrice = (state) =>
   state.cart.cart.reduce((sum, item) => sum + item.totalPrice, 0);
+
+//selektor w którym mam funkcję zwracającą inną funkcję
+export const getCurrentQuantityById = (id) => state => state.cart.cart.find((item)=>item.pizzaId === id)?.quantity ?? 0;
+
+// Stworzono selektor getCurrentQuantityById zwracający quantity dla każdego obiektu z cart oraz zmienną do wyświetlania/ukrywania DeleteItem. Zbudowano komponent UpdateItemQuantity z buttons do inc/decr quantity w CartItem.jsx.
