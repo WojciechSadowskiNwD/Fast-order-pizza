@@ -57,5 +57,3 @@ export const getTotalCartPrice = (state) =>
 
 //selektor w którym mam funkcję zwracającą inną funkcję
 export const getCurrentQuantityById = (id) => state => state.cart.cart.find((item)=>item.pizzaId === id)?.quantity ?? 0;
-
-// Stworzono selektor getCurrentQuantityById zwracający quantity dla każdego obiektu z cart oraz zmienną do wyświetlania/ukrywania DeleteItem. Zbudowano komponent UpdateItemQuantity z buttons do inc/decr quantity w CartItem.jsx.
