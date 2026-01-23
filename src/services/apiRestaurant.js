@@ -36,6 +36,7 @@ export async function createOrder(newOrder) {
   }
 }
 
+//Aktualizacja tych danych, które różnią się od oryginalnych na serwerze -> PATH
 export async function updateOrder(id, updateObj) {
   try {
     const res = await fetch(`${API_URL}/order/${id}`, {
